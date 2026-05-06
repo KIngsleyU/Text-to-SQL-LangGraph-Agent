@@ -1,0 +1,47 @@
+{
+  "spec_version": "1.0",
+  "generated_at": "2026-05-05T01:42:36.835740Z",
+  "git_commit_short": null,
+  "documentation": "Step 1 connector registry: dialect + policy + env-based credentials. Secrets live only in NEON_TEXT2SQL_URL (or split env vars in future).",
+  "sources": [
+    {
+      "id": "neon_text2sql_primary",
+      "kind": "postgresql",
+      "dialect": "postgresql",
+      "engine_hint": "sqlalchemy + psycopg (async: asyncpg)",
+      "connection": {
+        "uri_env_var": "NEON_TEXT2SQL_URL",
+        "password_storage": "embedded_in_uri_env_var_only",
+        "parsed_fields_redacted": true,
+        "redaction_note": "host/port/database/username omitted; resolve via NEON_TEXT2SQL_URL at runtime."
+      },
+      "routing": {
+        "default_schema": "northwind",
+        "allowed_schemas": [
+          "northwind"
+        ],
+        "search_path_recommendation": [
+          "northwind",
+          "public"
+        ]
+      },
+      "governance": {
+        "read_only_intent": true,
+        "statement_timeout_ms": 30000,
+        "max_rows_returned": 5000,
+        "blocked_statement_classes": [
+          "INSERT",
+          "UPDATE",
+          "DELETE",
+          "DROP",
+          "TRUNCATE",
+          "ALTER",
+          "CREATE",
+          "GRANT",
+          "REVOKE"
+        ],
+        "notes": "Enforce read-only at the DB role level in Neon; this JSON expresses application-side policy for the agent pipeline."
+      }
+    }
+  ]
+}

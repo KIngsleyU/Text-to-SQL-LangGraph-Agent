@@ -1,0 +1,1308 @@
+{
+  "catalog_spec_version": "1.1",
+  "catalog_version": "1.0.0",
+  "generated_at": "2026-05-05T12:37:01.960405Z",
+  "git_commit_short": null,
+  "source": "neon",
+  "database_kind": "postgresql",
+  "schema": "northwind",
+  "structural_content_sha256": "73062849c722c26c44a89b0b07b8442a676db863e1af1476fe9be8d5ffaf0919",
+  "tables": [
+    {
+      "table_name": "categories",
+      "description": "Product category lookup used to group products for reporting and filtering.",
+      "row_count": 8,
+      "primary_key_columns": [
+        "category_id"
+      ],
+      "columns": [
+        {
+          "column_name": "category_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in categories.",
+          "sample_values": []
+        },
+        {
+          "column_name": "category_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Human-readable category name.",
+          "sample_values": [
+            "Beverages",
+            "Produce",
+            "Condiments",
+            "Grains/Cereals",
+            "Meat/Poultry"
+          ]
+        },
+        {
+          "column_name": "description",
+          "data_type": "text",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "Text field. Sample values include: Desserts, candies, and sweet breads, Seaweed and fish, Breads, crackers, pasta, and cereal.",
+          "sample_values": [
+            "Desserts, candies, and sweet breads",
+            "Seaweed and fish",
+            "Breads, crackers, pasta, and cereal",
+            "Dried fruit and bean curd",
+            "Prepared meats"
+          ]
+        },
+        {
+          "column_name": "picture",
+          "data_type": "bytea",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Picture column (bytea, nullable).",
+          "sample_values": []
+        }
+      ]
+    },
+    {
+      "table_name": "customer_customer_demo",
+      "description": "Bridge table linking customers to demographic categories.",
+      "row_count": 0,
+      "primary_key_columns": [
+        "customer_id",
+        "customer_type_id"
+      ],
+      "columns": [
+        {
+          "column_name": "customer_id",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in customer_customer_demo.",
+          "sample_values": []
+        },
+        {
+          "column_name": "customer_type_id",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Primary key that uniquely identifies each row in customer_customer_demo.",
+          "sample_values": []
+        }
+      ]
+    },
+    {
+      "table_name": "customer_demographics",
+      "description": "Lookup of demographic categories that can be associated with customers.",
+      "row_count": 0,
+      "primary_key_columns": [
+        "customer_type_id"
+      ],
+      "columns": [
+        {
+          "column_name": "customer_type_id",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in customer_demographics.",
+          "sample_values": []
+        },
+        {
+          "column_name": "customer_desc",
+          "data_type": "text",
+          "is_nullable": true,
+          "ordinal_position": 2,
+          "description": "Text field used for filtering, grouping, or display.",
+          "sample_values": []
+        }
+      ]
+    },
+    {
+      "table_name": "customers",
+      "description": "Customer master records used for orders, segmentation, and geography analysis.",
+      "row_count": 91,
+      "primary_key_columns": [
+        "customer_id"
+      ],
+      "columns": [
+        {
+          "column_name": "customer_id",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in customers.",
+          "sample_values": [
+            "ALFKI",
+            "ANATR",
+            "ANTON",
+            "AROUT",
+            "BERGS"
+          ]
+        },
+        {
+          "column_name": "company_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Business/company display name.",
+          "sample_values": [
+            "FISSA Fabrica Inter. Salchichas S.A.",
+            "Wilman Kala",
+            "Magazzini Alimentari Riuniti",
+            "Wellington Importadora",
+            "The Cracker Box"
+          ]
+        },
+        {
+          "column_name": "contact_name",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "Primary contact person name.",
+          "sample_values": [
+            "Francisco Chang",
+            "André Fonseca",
+            "Pedro Afonso",
+            "Philip Cramer",
+            "Frédérique Citeaux"
+          ]
+        },
+        {
+          "column_name": "contact_title",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Job title of the primary contact.",
+          "sample_values": [
+            "Sales Manager",
+            "Owner",
+            "Owner/Marketing Assistant",
+            "Accounting Manager",
+            "Sales Associate"
+          ]
+        },
+        {
+          "column_name": "address",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 5,
+          "description": "Street address text field.",
+          "sample_values": [
+            "C/ Moralzarzal, 86",
+            "Gran Vía, 1",
+            "Mataderos  2312",
+            "Rua do Mercado, 12",
+            "Boulevard Tirou, 255"
+          ]
+        },
+        {
+          "column_name": "city",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 6,
+          "description": "City value used for geography filters.",
+          "sample_values": [
+            "Butte",
+            "Paris",
+            "Cowes",
+            "Cork",
+            "Bern"
+          ]
+        },
+        {
+          "column_name": "region",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 7,
+          "description": "Region/state/province text value used for geography filters.",
+          "sample_values": [
+            "Lara",
+            "DF",
+            "ID",
+            "Táchira",
+            "SP"
+          ]
+        },
+        {
+          "column_name": "postal_code",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 8,
+          "description": "Postal/ZIP code value.",
+          "sample_values": [
+            "12209",
+            "1675",
+            "5022",
+            "05454-876",
+            "04876-786"
+          ]
+        },
+        {
+          "column_name": "country",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 9,
+          "description": "Country value used for geography filters.",
+          "sample_values": [
+            "Argentina",
+            "Spain",
+            "Switzerland",
+            "Italy",
+            "Venezuela"
+          ]
+        },
+        {
+          "column_name": "phone",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 10,
+          "description": "Phone number text field.",
+          "sample_values": [
+            "(5) 552-3745",
+            "(95) 555 82 82",
+            "(91) 745 6200",
+            "(5) 555-4729",
+            "(171) 555-1717"
+          ]
+        },
+        {
+          "column_name": "fax",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 11,
+          "description": "Fax number text field.",
+          "sample_values": [
+            "(1) 354-2535",
+            "030-0076545",
+            "(91) 745 6210",
+            "0621-08924",
+            "30.59.85.11"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "employee_territories",
+      "description": "Bridge table linking employees to sales territories.",
+      "row_count": 49,
+      "primary_key_columns": [
+        "employee_id",
+        "territory_id"
+      ],
+      "columns": [
+        {
+          "column_name": "employee_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in employee_territories.",
+          "sample_values": []
+        },
+        {
+          "column_name": "territory_id",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Primary key that uniquely identifies each row in employee_territories.",
+          "sample_values": [
+            "01730",
+            "07960",
+            "32859",
+            "02184",
+            "48075"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "employees",
+      "description": "Employee master records for sales and order ownership reporting.",
+      "row_count": 9,
+      "primary_key_columns": [
+        "employee_id"
+      ],
+      "columns": [
+        {
+          "column_name": "employee_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in employees.",
+          "sample_values": []
+        },
+        {
+          "column_name": "last_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Human-readable name field used for labels, grouping, and filters.",
+          "sample_values": [
+            "Callahan",
+            "Fuller",
+            "Leverling",
+            "Peacock",
+            "Suyama"
+          ]
+        },
+        {
+          "column_name": "first_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 3,
+          "description": "Human-readable name field used for labels, grouping, and filters.",
+          "sample_values": [
+            "Laura",
+            "Janet",
+            "Andrew",
+            "Nancy",
+            "Anne"
+          ]
+        },
+        {
+          "column_name": "title",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Text field. Sample values include: Vice President, Sales, Inside Sales Coordinator, Sales Representative.",
+          "sample_values": [
+            "Vice President, Sales",
+            "Inside Sales Coordinator",
+            "Sales Representative",
+            "Sales Manager"
+          ]
+        },
+        {
+          "column_name": "title_of_courtesy",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 5,
+          "description": "Text field. Sample values include: Mrs., Mr., Ms..",
+          "sample_values": [
+            "Mrs.",
+            "Mr.",
+            "Ms.",
+            "Dr."
+          ]
+        },
+        {
+          "column_name": "birth_date",
+          "data_type": "date",
+          "is_nullable": true,
+          "ordinal_position": 6,
+          "description": "Employee date of birth.",
+          "sample_values": []
+        },
+        {
+          "column_name": "hire_date",
+          "data_type": "date",
+          "is_nullable": true,
+          "ordinal_position": 7,
+          "description": "Employee hiring date.",
+          "sample_values": []
+        },
+        {
+          "column_name": "address",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 8,
+          "description": "Street address text field.",
+          "sample_values": [
+            "Edgeham Hollow\\nWinchester Way",
+            "4110 Old Redmond Rd.",
+            "908 W. Capital Way",
+            "14 Garrett Hill",
+            "Coventry House\\nMiner Rd."
+          ]
+        },
+        {
+          "column_name": "city",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 9,
+          "description": "City value used for geography filters.",
+          "sample_values": [
+            "Redmond",
+            "London",
+            "Tacoma",
+            "Kirkland",
+            "Seattle"
+          ]
+        },
+        {
+          "column_name": "region",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 10,
+          "description": "Region/state/province text value used for geography filters.",
+          "sample_values": [
+            "WA"
+          ]
+        },
+        {
+          "column_name": "postal_code",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 11,
+          "description": "Postal/ZIP code value.",
+          "sample_values": [
+            "98033",
+            "98105",
+            "RG1 9SP",
+            "WG2 7LT",
+            "98401"
+          ]
+        },
+        {
+          "column_name": "country",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 12,
+          "description": "Country value used for geography filters.",
+          "sample_values": [
+            "UK",
+            "USA"
+          ]
+        },
+        {
+          "column_name": "home_phone",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 13,
+          "description": "Contact information field stored as text.",
+          "sample_values": [
+            "(206) 555-8122",
+            "(71) 555-5598",
+            "(71) 555-7773",
+            "(71) 555-4848",
+            "(71) 555-4444"
+          ]
+        },
+        {
+          "column_name": "extension",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 14,
+          "description": "Text field. Sample values include: 428, 5176, 2344.",
+          "sample_values": [
+            "428",
+            "5176",
+            "2344",
+            "3453",
+            "465"
+          ]
+        },
+        {
+          "column_name": "photo",
+          "data_type": "bytea",
+          "is_nullable": true,
+          "ordinal_position": 15,
+          "description": "Photo column (bytea, nullable).",
+          "sample_values": []
+        },
+        {
+          "column_name": "notes",
+          "data_type": "text",
+          "is_nullable": true,
+          "ordinal_position": 16,
+          "description": "Text field. Sample values include: Andrew received his BTS commercial in 1974 and a Ph.D. in international marketing from the University of Dallas in 1981.  He is fluent in French and Italian and reads German.  He joined the company as a sales representative, was promoted to sales manager in January 1992 and to vice president of sales in March 1993.  Andrew is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association., Anne has a BA degree in English from St. Lawrence College.  She is fluent in French and German., Laura received a BA in psychology from the University of Washington.  She has also completed a course in business French.  She reads and writes French..",
+          "sample_values": [
+            "Andrew received his BTS commercial in 1974 and a Ph.D. in international marketing from the University of Dallas in 1981.  He is fluent in French and Italian and reads German.  He joined the company as a sales representative, was promoted to sales manager in January 1992 and to vice president of sales in March 1993.  Andrew is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association.",
+            "Anne has a BA degree in English from St. Lawrence College.  She is fluent in French and German.",
+            "Laura received a BA in psychology from the University of Washington.  She has also completed a course in business French.  She reads and writes French.",
+            "Michael is a graduate of Sussex University (MA, economics, 1983) and the University of California at Los Angeles (MBA, marketing, 1986).  He has also taken the courses Multi-Cultural Selling and Time Management for the Sales Professional.  He is fluent in Japanese and can read and write French, Portuguese, and Spanish.",
+            "Janet has a BS degree in chemistry from Boston College (1984).  She has also completed a certificate program in food retailing management.  Janet was hired as a sales associate in 1991 and promoted to sales representative in February 1992."
+          ]
+        },
+        {
+          "column_name": "reports_to",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 17,
+          "description": "Foreign key referencing employees.employee_id to support joins.",
+          "sample_values": []
+        },
+        {
+          "column_name": "photo_path",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 18,
+          "description": "Text field. Sample values include: http://accweb/emmployees/davolio.bmp, http://accweb/emmployees/leverling.bmp, http://accweb/emmployees/fuller.bmp.",
+          "sample_values": [
+            "http://accweb/emmployees/davolio.bmp",
+            "http://accweb/emmployees/leverling.bmp",
+            "http://accweb/emmployees/fuller.bmp",
+            "http://accweb/emmployees/peacock.bmp",
+            "http://accweb/emmployees/buchanan.bmp"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "order_details",
+      "description": "Order line items with product, quantity, unit price, and discount values.",
+      "row_count": 2155,
+      "primary_key_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "columns": [
+        {
+          "column_name": "order_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in order_details.",
+          "sample_values": []
+        },
+        {
+          "column_name": "product_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Primary key that uniquely identifies each row in order_details.",
+          "sample_values": []
+        },
+        {
+          "column_name": "unit_price",
+          "data_type": "real",
+          "is_nullable": false,
+          "ordinal_position": 3,
+          "description": "Monetary unit price used for line-level or product-level revenue calculations.",
+          "sample_values": []
+        },
+        {
+          "column_name": "quantity",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 4,
+          "description": "Item quantity used for volume and revenue calculations.",
+          "sample_values": []
+        },
+        {
+          "column_name": "discount",
+          "data_type": "real",
+          "is_nullable": false,
+          "ordinal_position": 5,
+          "description": "Discount fraction applied at line level (for example 0.10 means 10%).",
+          "sample_values": []
+        }
+      ]
+    },
+    {
+      "table_name": "orders",
+      "description": "Order header records containing customer, employee, shipper, and shipment details.",
+      "row_count": 830,
+      "primary_key_columns": [
+        "order_id"
+      ],
+      "columns": [
+        {
+          "column_name": "order_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in orders.",
+          "sample_values": []
+        },
+        {
+          "column_name": "customer_id",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 2,
+          "description": "Foreign key referencing customers.customer_id to support joins.",
+          "sample_values": [
+            "TOMSP",
+            "LONEP",
+            "OLDWO",
+            "WARTH",
+            "MAGAA"
+          ]
+        },
+        {
+          "column_name": "employee_id",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "Foreign key referencing employees.employee_id to support joins.",
+          "sample_values": []
+        },
+        {
+          "column_name": "order_date",
+          "data_type": "date",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Date when the order was placed.",
+          "sample_values": []
+        },
+        {
+          "column_name": "required_date",
+          "data_type": "date",
+          "is_nullable": true,
+          "ordinal_position": 5,
+          "description": "Date when the order is required by the customer.",
+          "sample_values": []
+        },
+        {
+          "column_name": "shipped_date",
+          "data_type": "date",
+          "is_nullable": true,
+          "ordinal_position": 6,
+          "description": "Date when the order was shipped.",
+          "sample_values": []
+        },
+        {
+          "column_name": "ship_via",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 7,
+          "description": "Foreign key referencing shippers.shipper_id to support joins.",
+          "sample_values": []
+        },
+        {
+          "column_name": "freight",
+          "data_type": "real",
+          "is_nullable": true,
+          "ordinal_position": 8,
+          "description": "Shipping freight charge associated with the order.",
+          "sample_values": []
+        },
+        {
+          "column_name": "ship_name",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 9,
+          "description": "Recipient or destination name for shipment.",
+          "sample_values": [
+            "Wilman Kala",
+            "Magazzini Alimentari Riuniti",
+            "The Cracker Box",
+            "Wellington Importadora",
+            "Let's Stop N Shop"
+          ]
+        },
+        {
+          "column_name": "ship_address",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 10,
+          "description": "Shipment destination street address.",
+          "sample_values": [
+            "Mataderos  2312",
+            "Gran Vía, 1",
+            "Rua do Mercado, 12",
+            "Calle Dr. Jorge Cash 321",
+            "Åkergatan 24"
+          ]
+        },
+        {
+          "column_name": "ship_city",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 11,
+          "description": "Shipment destination city.",
+          "sample_values": [
+            "Butte",
+            "Paris",
+            "Cowes",
+            "Cork",
+            "Bern"
+          ]
+        },
+        {
+          "column_name": "ship_region",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 12,
+          "description": "Shipment destination region/state/province.",
+          "sample_values": [
+            "Lara",
+            "DF",
+            "ID",
+            "Táchira",
+            "SP"
+          ]
+        },
+        {
+          "column_name": "ship_postal_code",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 13,
+          "description": "Shipment destination postal/ZIP code.",
+          "sample_values": [
+            "12209",
+            "1675",
+            "5022",
+            "05454-876",
+            "04876-786"
+          ]
+        },
+        {
+          "column_name": "ship_country",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 14,
+          "description": "Shipment destination country.",
+          "sample_values": [
+            "Argentina",
+            "Spain",
+            "Switzerland",
+            "Italy",
+            "Venezuela"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "products",
+      "description": "Product catalog including supplier, category, pricing, and stock metadata.",
+      "row_count": 77,
+      "primary_key_columns": [
+        "product_id"
+      ],
+      "columns": [
+        {
+          "column_name": "product_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in products.",
+          "sample_values": []
+        },
+        {
+          "column_name": "product_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Human-readable product name.",
+          "sample_values": [
+            "Pâté chinois",
+            "Flotemysost",
+            "Camembert Pierrot",
+            "Inlagd Sill",
+            "Thüringer Rostbratwurst"
+          ]
+        },
+        {
+          "column_name": "supplier_id",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "Foreign key referencing suppliers.supplier_id to support joins.",
+          "sample_values": []
+        },
+        {
+          "column_name": "category_id",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Foreign key referencing categories.category_id to support joins.",
+          "sample_values": []
+        },
+        {
+          "column_name": "quantity_per_unit",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 5,
+          "description": "Text field. Sample values include: 16 - 2 kg boxes, 10 kg pkg., 48 pieces.",
+          "sample_values": [
+            "16 - 2 kg boxes",
+            "10 kg pkg.",
+            "48 pieces",
+            "18 - 500 g pkgs.",
+            "10 boxes x 12 pieces"
+          ]
+        },
+        {
+          "column_name": "unit_price",
+          "data_type": "real",
+          "is_nullable": true,
+          "ordinal_position": 6,
+          "description": "Monetary unit price used for line-level or product-level revenue calculations.",
+          "sample_values": []
+        },
+        {
+          "column_name": "units_in_stock",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 7,
+          "description": "Current inventory units available in stock.",
+          "sample_values": []
+        },
+        {
+          "column_name": "units_on_order",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 8,
+          "description": "Units currently on purchase order.",
+          "sample_values": []
+        },
+        {
+          "column_name": "reorder_level",
+          "data_type": "smallint",
+          "is_nullable": true,
+          "ordinal_position": 9,
+          "description": "Stock threshold that triggers product reorder.",
+          "sample_values": []
+        },
+        {
+          "column_name": "discontinued",
+          "data_type": "integer",
+          "is_nullable": false,
+          "ordinal_position": 10,
+          "description": "Product lifecycle flag (true/1 indicates discontinued).",
+          "sample_values": []
+        }
+      ]
+    },
+    {
+      "table_name": "region",
+      "description": "Region lookup used to organize territories.",
+      "row_count": 4,
+      "primary_key_columns": [
+        "region_id"
+      ],
+      "columns": [
+        {
+          "column_name": "region_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in region.",
+          "sample_values": []
+        },
+        {
+          "column_name": "region_description",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Human-readable region name/description.",
+          "sample_values": [
+            "Eastern",
+            "Southern",
+            "Western",
+            "Northern"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "shippers",
+      "description": "Shipping carrier lookup referenced by orders.",
+      "row_count": 6,
+      "primary_key_columns": [
+        "shipper_id"
+      ],
+      "columns": [
+        {
+          "column_name": "shipper_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in shippers.",
+          "sample_values": []
+        },
+        {
+          "column_name": "company_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Business/company display name.",
+          "sample_values": [
+            "UPS",
+            "United Package",
+            "DHL",
+            "Alliance Shippers",
+            "Federal Shipping"
+          ]
+        },
+        {
+          "column_name": "phone",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "Phone number text field.",
+          "sample_values": [
+            "1-800-222-0451",
+            "1-800-225-5345",
+            "(503) 555-9831",
+            "1-800-782-7892",
+            "(503) 555-9931"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "suppliers",
+      "description": "Supplier/vendor master records referenced by products.",
+      "row_count": 29,
+      "primary_key_columns": [
+        "supplier_id"
+      ],
+      "columns": [
+        {
+          "column_name": "supplier_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in suppliers.",
+          "sample_values": []
+        },
+        {
+          "column_name": "company_name",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Business/company display name.",
+          "sample_values": [
+            "Heli Süßwaren GmbH & Co. KG",
+            "New Orleans Cajun Delights",
+            "Escargots Nouveaux",
+            "New England Seafood Cannery",
+            "Grandma Kelly's Homestead"
+          ]
+        },
+        {
+          "column_name": "contact_name",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "Primary contact person name.",
+          "sample_values": [
+            "Charlotte Cooper",
+            "Chandra Leka",
+            "Antonio del Valle Saavedra",
+            "Yoshi Nagase",
+            "Wendy Mackenzie"
+          ]
+        },
+        {
+          "column_name": "contact_title",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Job title of the primary contact.",
+          "sample_values": [
+            "Accounting Manager",
+            "Export Administrator",
+            "Marketing Representative",
+            "Marketing Manager",
+            "Purchasing Manager"
+          ]
+        },
+        {
+          "column_name": "address",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 5,
+          "description": "Street address text field.",
+          "sample_values": [
+            "Brovallavägen 231",
+            "471 Serangoon Loop, Suite #402",
+            "170 Prince Edward Parade Hunter's Hill",
+            "Via dei Gelsomini, 153",
+            "203, Rue des Francs-Bourgeois"
+          ]
+        },
+        {
+          "column_name": "city",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 6,
+          "description": "City value used for geography filters.",
+          "sample_values": [
+            "Ste-Hyacinthe",
+            "Lyngby",
+            "Paris",
+            "London",
+            "Sydney"
+          ]
+        },
+        {
+          "column_name": "region",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 7,
+          "description": "Region/state/province text value used for geography filters.",
+          "sample_values": [
+            "OR",
+            "LA",
+            "MI",
+            "MA",
+            "NSW"
+          ]
+        },
+        {
+          "column_name": "postal_code",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 8,
+          "description": "Postal/ZIP code value.",
+          "sample_values": [
+            "2800",
+            "5442",
+            "2042",
+            "48104",
+            "J2S 7S8"
+          ]
+        },
+        {
+          "column_name": "country",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 9,
+          "description": "Country value used for geography filters.",
+          "sample_values": [
+            "Spain",
+            "Italy",
+            "Norway",
+            "Sweden",
+            "France"
+          ]
+        },
+        {
+          "column_name": "phone",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 10,
+          "description": "Phone number text field.",
+          "sample_values": [
+            "(617) 555-3267",
+            "(12345) 1212",
+            "(0)2-953010",
+            "38.76.98.06",
+            "(98) 598 76 54"
+          ]
+        },
+        {
+          "column_name": "fax",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 11,
+          "description": "Fax number text field.",
+          "sample_values": [
+            "(04721) 8714",
+            "(1) 03.83.00.62",
+            "(617) 555-3389",
+            "(03) 444-6588",
+            "38.76.98.58"
+          ]
+        },
+        {
+          "column_name": "homepage",
+          "data_type": "text",
+          "is_nullable": true,
+          "ordinal_position": 12,
+          "description": "Text field. Sample values include: G'day Mate (on the World Wide Web)#http://www.microsoft.com/accessdev/sampleapps/gdaymate.htm#, #FORMAGGI.HTM#, #CAJUN.HTM#.",
+          "sample_values": [
+            "G'day Mate (on the World Wide Web)#http://www.microsoft.com/accessdev/sampleapps/gdaymate.htm#",
+            "#FORMAGGI.HTM#",
+            "#CAJUN.HTM#",
+            "Plutzer (on the World Wide Web)#http://www.microsoft.com/accessdev/sampleapps/plutzer.htm#",
+            "Mayumi's (on the World Wide Web)#http://www.microsoft.com/accessdev/sampleapps/mayumi.htm#"
+          ]
+        }
+      ]
+    },
+    {
+      "table_name": "territories",
+      "description": "Sales territory lookup linked to regions and employees.",
+      "row_count": 53,
+      "primary_key_columns": [
+        "territory_id"
+      ],
+      "columns": [
+        {
+          "column_name": "territory_id",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in territories.",
+          "sample_values": [
+            "01581",
+            "01730",
+            "01833",
+            "02116",
+            "02139"
+          ]
+        },
+        {
+          "column_name": "territory_description",
+          "data_type": "character varying",
+          "is_nullable": false,
+          "ordinal_position": 2,
+          "description": "Human-readable territory name/description.",
+          "sample_values": [
+            "Neward",
+            "Santa Cruz",
+            "Columbia",
+            "New York",
+            "Westboro"
+          ]
+        },
+        {
+          "column_name": "region_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 3,
+          "description": "Foreign key referencing region.region_id to support joins.",
+          "sample_values": []
+        }
+      ]
+    },
+    {
+      "table_name": "us_states",
+      "description": "Reference table of U.S. states with code and name.",
+      "row_count": 51,
+      "primary_key_columns": [
+        "state_id"
+      ],
+      "columns": [
+        {
+          "column_name": "state_id",
+          "data_type": "smallint",
+          "is_nullable": false,
+          "ordinal_position": 1,
+          "description": "Primary key that uniquely identifies each row in us_states.",
+          "sample_values": []
+        },
+        {
+          "column_name": "state_name",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 2,
+          "description": "U.S. state full name.",
+          "sample_values": [
+            "Oklahoma",
+            "North Carolina",
+            "Colorado",
+            "Mississippi",
+            "Florida"
+          ]
+        },
+        {
+          "column_name": "state_abbr",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 3,
+          "description": "U.S. state abbreviation code.",
+          "sample_values": [
+            "CA",
+            "NH",
+            "OR",
+            "TX",
+            "ND"
+          ]
+        },
+        {
+          "column_name": "state_region",
+          "data_type": "character varying",
+          "is_nullable": true,
+          "ordinal_position": 4,
+          "description": "Text field. Sample values include: midwest, west, south.",
+          "sample_values": [
+            "midwest",
+            "west",
+            "south",
+            "north",
+            "east"
+          ]
+        }
+      ]
+    }
+  ],
+  "foreign_keys": [
+    {
+      "source_table": "customer_customer_demo",
+      "source_column": "customer_id",
+      "target_table": "customers",
+      "target_column": "customer_id",
+      "constraint_name": "fk_customer_customer_demo_customers"
+    },
+    {
+      "source_table": "customer_customer_demo",
+      "source_column": "customer_type_id",
+      "target_table": "customer_demographics",
+      "target_column": "customer_type_id",
+      "constraint_name": "fk_customer_customer_demo_customer_demographics"
+    },
+    {
+      "source_table": "employee_territories",
+      "source_column": "employee_id",
+      "target_table": "employees",
+      "target_column": "employee_id",
+      "constraint_name": "fk_employee_territories_employees"
+    },
+    {
+      "source_table": "employee_territories",
+      "source_column": "territory_id",
+      "target_table": "territories",
+      "target_column": "territory_id",
+      "constraint_name": "fk_employee_territories_territories"
+    },
+    {
+      "source_table": "employees",
+      "source_column": "reports_to",
+      "target_table": "employees",
+      "target_column": "employee_id",
+      "constraint_name": "fk_employees_employees"
+    },
+    {
+      "source_table": "order_details",
+      "source_column": "order_id",
+      "target_table": "orders",
+      "target_column": "order_id",
+      "constraint_name": "fk_order_details_orders"
+    },
+    {
+      "source_table": "order_details",
+      "source_column": "product_id",
+      "target_table": "products",
+      "target_column": "product_id",
+      "constraint_name": "fk_order_details_products"
+    },
+    {
+      "source_table": "orders",
+      "source_column": "customer_id",
+      "target_table": "customers",
+      "target_column": "customer_id",
+      "constraint_name": "fk_orders_customers"
+    },
+    {
+      "source_table": "orders",
+      "source_column": "employee_id",
+      "target_table": "employees",
+      "target_column": "employee_id",
+      "constraint_name": "fk_orders_employees"
+    },
+    {
+      "source_table": "orders",
+      "source_column": "ship_via",
+      "target_table": "shippers",
+      "target_column": "shipper_id",
+      "constraint_name": "fk_orders_shippers"
+    },
+    {
+      "source_table": "products",
+      "source_column": "category_id",
+      "target_table": "categories",
+      "target_column": "category_id",
+      "constraint_name": "fk_products_categories"
+    },
+    {
+      "source_table": "products",
+      "source_column": "supplier_id",
+      "target_table": "suppliers",
+      "target_column": "supplier_id",
+      "constraint_name": "fk_products_suppliers"
+    },
+    {
+      "source_table": "territories",
+      "source_column": "region_id",
+      "target_table": "region",
+      "target_column": "region_id",
+      "constraint_name": "fk_territories_region"
+    }
+  ],
+  "export_notes": {
+    "sample_values": "Up to 5 DISTINCT text casts per text-like column; not exhaustive domain enumeration.",
+    "comments": "Table/column descriptions from PostgreSQL COMMENT ON; null means no comment in the database."
+  }
+}
