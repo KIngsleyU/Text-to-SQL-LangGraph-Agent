@@ -1,9 +1,7 @@
 """Shared loaders for Step 1 artifacts used by agent nodes and tools.
 
-Currently only ``semantic_terms.northwind.json`` is exposed. As more Step 1
-artifacts (vector indexes, sensitive-data tags, value retrieval cache, etc.)
-come online they should be added here so every node/tool has one canonical
-loader path with caching.
+``semantic_terms`` and ``schema_vector_index`` manifests are exposed here so
+nodes/tools share one canonical loader path with caching.
 """
 
 from __future__ import annotations
@@ -17,6 +15,26 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 ARTIFACTS_DIR = REPO_ROOT / "data" / "artifacts"
 
 SEMANTIC_TERMS_PATH = ARTIFACTS_DIR / "semantic_terms.northwind.json"
+
+
+def schema_vector_manifest_path(schema: str = "northwind") -> Path:
+    """Path to ``schema_vector_index_manifest.<schema>.json`` (Step 1 Pinecone binding)."""
+    return ARTIFACTS_DIR / f"schema_vector_index_manifest.{schema}.json"
+
+
+@lru_cache(maxsize=8)
+def load_schema_vector_manifest(schema: str = "northwind") -> dict[str, Any]:
+    """Load manifest written by ``scripts/build_schema_index.py``.
+
+    Cached per schema. After regenerating the manifest, call
+    ``load_schema_vector_manifest.cache_clear()`` or restart the process.
+    """
+    path = schema_vector_manifest_path(schema)
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Missing {path.name}; run: python scripts/build_schema_index.py --schema {schema}"
+        )
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 @lru_cache(maxsize=1)
