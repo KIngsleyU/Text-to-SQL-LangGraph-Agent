@@ -1,0 +1,30 @@
+{
+  "schema_vector_index_manifest_spec_version": "1.0",
+  "generated_at": "2026-05-17T02:28:36.693692Z",
+  "git_commit_short": "71dc0de",
+  "pinecone_index_name": "text2sql-schema",
+  "pinecone_namespace": "schema_northwind",
+  "text_field": "text",
+  "embed_field_map": {
+    "text": "text"
+  },
+  "integrated_embedding_model": "llama-text-embed-v2",
+  "metric": "cosine",
+  "chunking": {
+    "table_chunks": true,
+    "column_chunks": true
+  },
+  "record_count": 106,
+  "chunk_counts": {
+    "table": 14,
+    "column": 92
+  },
+  "source_id": "neon_text2sql_primary",
+  "catalog_binding": {
+    "metadata_catalog_file": "metadata_catalog.northwind.json",
+    "catalog_spec_version": "1.1",
+    "catalog_version": "1.0.0",
+    "structural_content_sha256": "73062849c722c26c44a89b0b07b8442a676db863e1af1476fe9be8d5ffaf0919",
+    "catalog_generated_at": "2026-05-05T12:37:01.960405Z"
+  }
+}

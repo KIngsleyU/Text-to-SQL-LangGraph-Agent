@@ -1,4 +1,4 @@
 # Text-to-SQL LangGraph agent — Step 1 scripts + Pinecone schema index
-pinecone>=7.0.0
+pinecone>=9.0.0
 psycopg[binary]>=3.1.0
 python-dotenv>=1.0.0

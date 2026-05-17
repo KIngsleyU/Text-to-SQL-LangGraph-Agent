@@ -18,6 +18,7 @@ from typing import Any
 from pinecone import Pinecone
 
 from agent._artifact import load_schema_vector_manifest
+from agent.pinecone_compat import search_by_text
 
 
 def _normalize_hits(resp: Any) -> list[dict[str, Any]]:
@@ -82,11 +83,7 @@ def search_schema_chunks(
     if table_name:
         flt = {"$and": [flt, {"table_name": {"$eq": table_name}}]}
 
-    q: dict[str, Any] = {
-        "top_k": top_k * 2 if rerank else top_k,
-        "inputs": {"text": query},
-        "filter": flt,
-    }
+    search_k = top_k * 2 if rerank else top_k
 
     pc = Pinecone(api_key=api_key)
     index = pc.Index(index_name)
@@ -99,5 +96,12 @@ def search_schema_chunks(
             "rank_fields": [text_field],
         }
 
-    resp = index.search(namespace=namespace, query=q, rerank=rerank_kw)
+    resp = search_by_text(
+        index,
+        namespace=namespace,
+        query_text=query,
+        top_k=search_k,
+        metadata_filter=flt,
+        rerank=rerank_kw,
+    )
     return _normalize_hits(resp)[:top_k]
