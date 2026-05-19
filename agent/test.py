@@ -24,8 +24,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from agent.nodes import semantic_resolution_node
-from agent.tools import lookup_semantic_term
+from agent.nodes import clarification_node, schema_retrieval_node, semantic_resolution_node
+from agent.tools import lookup_semantic_term, retrieve_schema_chunks
 
 
 def _print(label: str, payload: Any) -> None:
@@ -50,10 +50,22 @@ if __name__ == "__main__":
         "Revenue by category, exclude discontinued products",
         "How many active customers placed orders",
         "Sales by country",
+        "Top customers",
         "Average line discount by supplier",
         "Stock units value at list price for non-discontinued products",
     ]
     query = queries[5]
 
-    _print(f"NODE result for: {query!r}", semantic_resolution_node(query))
+    semantic_out = semantic_resolution_node(query)
+    _print(f"NODE result for: {query!r}", semantic_out)
     _print("TOOL result for phrase: 'active customers'", lookup_semantic_term("active customers"))
+    _print("TOOL schema chunks for: 'revenue by product category'", retrieve_schema_chunks("revenue by product category"))
+
+    state = {"original_query": query, **semantic_out}
+    _print("NODE schema retrieval (fallback only)", schema_retrieval_node(state))
+
+    clarification_state = {
+        "original_query": queries[6],
+        **semantic_resolution_node(queries[6]),
+    }
+    _print("NODE clarification", clarification_node(clarification_state))

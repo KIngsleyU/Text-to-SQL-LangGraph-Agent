@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from agent._artifact import load_schema_vector_manifest
@@ -18,6 +19,14 @@ def schema_retrieval_node(state: TextToSQLState) -> dict[str, Any]:
     router = state.get("router") or {}
     if not router.get("fallback_used"):
         return {"schema_rag_used": False}
+
+    if not os.getenv("PINECONE_API_KEY"):
+        return {
+            "schema_rag_used": False,
+            "schema_rag_query": state.get("original_query") or state.get("query") or "",
+            "schema_rag_hits": [],
+            "schema_rag_text": "",
+        }
 
     query = state.get("original_query") or state.get("query") or ""
     schema = router.get("schema") or "northwind"

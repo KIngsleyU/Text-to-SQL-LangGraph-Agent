@@ -12,6 +12,8 @@ class TextToSQLState(TypedDict, total=False):
     schema_rag_query: str
     schema_rag_hits: list[dict[str, Any]]
     schema_rag_text: str
+    needs_clarification: bool
+    clarification_question: str
     candidate_sql: str
     execution_result: list[dict[str, Any]]
     error_history: Annotated[list[str], add]
