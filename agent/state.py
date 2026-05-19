@@ -8,6 +8,10 @@ class TextToSQLState(TypedDict, total=False):
     query: str
     router: dict[str, Any]
     semantic_prompt_payload: dict[str, Any]
+    schema_rag_used: bool
+    schema_rag_query: str
+    schema_rag_hits: list[dict[str, Any]]
+    schema_rag_text: str
     candidate_sql: str
     execution_result: list[dict[str, Any]]
     error_history: Annotated[list[str], add]

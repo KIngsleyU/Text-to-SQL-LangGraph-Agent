@@ -7,6 +7,7 @@ graph wiring::
     builder.add_node("semantic_resolution", semantic_resolution_node)
 """
 
+from agent.nodes.schema_retrieval import schema_retrieval_node
 from agent.nodes.semantic_resolution import semantic_resolution_node
 
-__all__ = ["semantic_resolution_node"]
+__all__ = ["semantic_resolution_node", "schema_retrieval_node"]

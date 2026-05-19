@@ -7,5 +7,6 @@ Each tool lives in its own module and is re-exported here::
 """
 
 from agent.tools.lookup_semantic_term import lookup_semantic_term
+from agent.tools.retrieve_schema_chunks import retrieve_schema_chunks
 
-__all__ = ["lookup_semantic_term"]
+__all__ = ["lookup_semantic_term", "retrieve_schema_chunks"]

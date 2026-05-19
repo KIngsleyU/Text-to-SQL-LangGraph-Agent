@@ -23,9 +23,9 @@ if str(REPO_ROOT) not in sys.path:
 
 from langgraph.graph import END, StateGraph
 
-from agent.nodes import semantic_resolution_node
+from agent.nodes import schema_retrieval_node, semantic_resolution_node
 from agent.state import TextToSQLState
-from agent.tools import lookup_semantic_term  # noqa: F401  (bound to the LLM later)
+from agent.tools import lookup_semantic_term, retrieve_schema_chunks  # noqa: F401
 
 
 def _semantic_resolution(state: TextToSQLState) -> dict[str, Any]:
@@ -33,12 +33,26 @@ def _semantic_resolution(state: TextToSQLState) -> dict[str, Any]:
     return semantic_resolution_node(state["original_query"])
 
 
+def _schema_retrieval(state: TextToSQLState) -> dict[str, Any]:
+    """Adapter: schema RAG runs only when fallback is signaled."""
+    return schema_retrieval_node(state)
+
+
+def _route_after_semantic(state: TextToSQLState) -> str:
+    router = state.get("router") or {}
+    if router.get("needs_clarification"):
+        return END
+    if router.get("fallback_used"):
+        return "schema_retrieval"
+    return END
+
+
 def build_graph():
     """Build and compile the agent graph.
 
     Current topology (will grow as nodes land)::
 
-        START -> semantic_resolution -> END
+        START -> semantic_resolution -> (schema_retrieval?) -> END
 
     Next nodes to add (per the design docs): clarification (HITL),
     schema_rag_fallback, sql_generation, sql_validation_sqlglot,
@@ -46,12 +60,14 @@ def build_graph():
     """
     builder = StateGraph(TextToSQLState)
     builder.add_node("semantic_resolution", _semantic_resolution)
+    builder.add_node("schema_retrieval", _schema_retrieval)
     builder.set_entry_point("semantic_resolution")
-    builder.add_edge("semantic_resolution", END)
+    builder.add_conditional_edges("semantic_resolution", _route_after_semantic)
+    builder.add_edge("schema_retrieval", END)
 
     # When langchain_core + an LLM are wired in:
     #     from langchain_core.tools import tool
-    #     sql_llm = sql_llm.bind_tools([tool(lookup_semantic_term)])
+    #     sql_llm = sql_llm.bind_tools([tool(lookup_semantic_term), tool(retrieve_schema_chunks)])
 
     return builder.compile()
 
