@@ -1,7 +1,7 @@
 {
   "schema_vector_index_manifest_spec_version": "1.0",
-  "generated_at": "2026-05-17T02:28:36.693692Z",
-  "git_commit_short": "71dc0de",
+  "generated_at": "2026-05-17T04:10:06.555766Z",
+  "git_commit_short": "0873951",
   "pinecone_index_name": "text2sql-schema",
   "pinecone_namespace": "schema_northwind",
   "text_field": "text",

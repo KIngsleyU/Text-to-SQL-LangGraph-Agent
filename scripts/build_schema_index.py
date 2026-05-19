@@ -100,6 +100,7 @@ if str(_REPO_ROOT_EARLY) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT_EARLY))
 
 from agent.pinecone_compat import (
+    normalize_search_hits,
     resolve_embed_document_field,
     search_by_text,
     upsert_records_batch,
@@ -435,28 +436,12 @@ def _smoke_search(
         top_k=top_k,
         metadata_filter=flt,
     )
-    # Normalize hits: Pinecone Python SDK version may return objects or plain dicts.
-    hits = []
-    if hasattr(resp, "result") and resp.result and hasattr(resp.result, "hits"):
-        hits = list(resp.result.hits)
-    elif isinstance(resp, dict):
-        hits = list((resp.get("result") or {}).get("hits") or [])
+    hits = normalize_search_hits(resp)
     print(f"\nSmoke search ({top_k} hits, filter schema_name={schema_filter!r}):")
     for h in hits:
-        # Extract _id, similarity score, and stored fields from either representation.
-        if isinstance(h, dict):
-            hid = h.get("_id")
-            score = h.get("_score")
-            fields = h.get("fields") or {}
-        else:
-            hid = getattr(h, "_id", None)
-            score = getattr(h, "_score", None)
-            fields = getattr(h, "fields", None) or {}
-        if hasattr(fields, "get"):
-            preview = (fields.get(embed_document_field) or "")[:160]
-        else:
-            preview = str(fields)[:160]
-        print(f"  id={hid} score={score} preview={preview!r}")
+        fields = h.get("fields") or {}
+        preview = (fields.get(embed_document_field) or "")[:160]
+        print(f"  id={h.get('id')} score={h.get('score')} preview={preview!r}")
 
 
 def parse_args() -> argparse.Namespace:

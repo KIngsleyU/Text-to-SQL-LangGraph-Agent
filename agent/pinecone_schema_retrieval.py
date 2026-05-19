@@ -18,36 +18,7 @@ from typing import Any
 from pinecone import Pinecone
 
 from agent._artifact import load_schema_vector_manifest
-from agent.pinecone_compat import search_by_text
-
-
-def _normalize_hits(resp: Any) -> list[dict[str, Any]]:
-    hits_raw: list[Any] = []
-    if hasattr(resp, "result") and resp.result is not None:
-        rh = getattr(resp.result, "hits", None)
-        if rh is not None:
-            hits_raw = list(rh)
-    elif isinstance(resp, dict):
-        hits_raw = list((resp.get("result") or {}).get("hits") or [])
-
-    out: list[dict[str, Any]] = []
-    for h in hits_raw:
-        if isinstance(h, dict):
-            hid = h.get("_id")
-            score = h.get("_score")
-            fields = h.get("fields") or {}
-        else:
-            hid = getattr(h, "_id", None)
-            score = getattr(h, "_score", None)
-            fields = getattr(h, "fields", None)
-            if fields is not None and hasattr(fields, "model_dump"):
-                fields = fields.model_dump()
-            elif fields is not None and hasattr(fields, "__dict__"):
-                fields = dict(fields.__dict__)
-            else:
-                fields = fields or {}
-        out.append({"id": hid, "score": score, "fields": dict(fields)})
-    return out
+from agent.pinecone_compat import normalize_search_hits, search_by_text
 
 
 def search_schema_chunks(
@@ -77,7 +48,7 @@ def search_schema_chunks(
     manifest = load_schema_vector_manifest(schema)
     index_name = str(manifest["pinecone_index_name"])
     namespace = str(manifest["pinecone_namespace"])
-    text_field = str(manifest.get("text_field", "content"))
+    text_field = str(manifest.get("text_field", "text"))
 
     flt: dict[str, Any] = {"schema_name": {"$eq": schema}}
     if table_name:
@@ -104,4 +75,4 @@ def search_schema_chunks(
         metadata_filter=flt,
         rerank=rerank_kw,
     )
-    return _normalize_hits(resp)[:top_k]
+    return normalize_search_hits(resp)[:top_k]

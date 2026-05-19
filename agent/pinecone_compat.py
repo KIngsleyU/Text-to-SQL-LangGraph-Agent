@@ -45,6 +45,49 @@ def upsert_records_batch(index: Any, namespace: str, records: list[dict[str, Any
     return index.upsert_records(namespace, records)
 
 
+def _hit_fields_dict(fields: Any) -> dict[str, Any]:
+    if fields is None:
+        return {}
+    if isinstance(fields, dict):
+        return dict(fields)
+    if hasattr(fields, "model_dump"):
+        return dict(fields.model_dump())
+    if hasattr(fields, "to_dict"):
+        return dict(fields.to_dict())
+    if hasattr(fields, "__dict__"):
+        return dict(fields.__dict__)
+    return {}
+
+
+def normalize_hit(hit: Any) -> dict[str, Any]:
+    """Normalize one search hit to ``{id, score, fields}`` (SDK v7–v9)."""
+    if isinstance(hit, dict):
+        hid = hit.get("id") or hit.get("_id")
+        score = hit.get("score") if hit.get("score") is not None else hit.get("_score")
+        fields = _hit_fields_dict(hit.get("fields"))
+        return {"id": hid, "score": score, "fields": fields}
+
+    hid = getattr(hit, "id", None) or getattr(hit, "_id", None)
+    score = getattr(hit, "score", None)
+    if score is None:
+        score = getattr(hit, "_score", None)
+    fields = _hit_fields_dict(getattr(hit, "fields", None))
+    return {"id": hid, "score": score, "fields": fields}
+
+
+def normalize_search_hits(resp: Any) -> list[dict[str, Any]]:
+    """Extract hits from a search response and normalize each to ``{id, score, fields}``."""
+    hits_raw: list[Any] = []
+    if hasattr(resp, "result") and resp.result is not None:
+        rh = getattr(resp.result, "hits", None)
+        if rh is not None:
+            hits_raw = list(rh)
+    elif isinstance(resp, dict):
+        hits_raw = list((resp.get("result") or {}).get("hits") or [])
+
+    return [normalize_hit(h) for h in hits_raw]
+
+
 def search_by_text(
     index: Any,
     *,
